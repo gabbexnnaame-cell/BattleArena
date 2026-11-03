@@ -10,6 +10,6 @@ public class Knight extends Character {
 
         addAction(new AttackAction(15));
         addAction(new HealAction(10));
-        addAction(new BlockAction(66));
+        addAction(new BlockAction(50));
     }
 }
