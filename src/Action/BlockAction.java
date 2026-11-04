@@ -1,6 +1,6 @@
 package Action;
 
-import BattleArena.Character;
+import Characters.Character;
 
 public class BlockAction implements CombatAction {
 

@@ -1,15 +1,16 @@
 package BattleArena;
 import Action.*;
+import Characters.Character;
 
 import java.util.Random;
 import java.util.List;
 
 public class Game {
 
-    private Character player;
-    private Character computer;
+    private Characters.Character player;
+    private Characters.Character computer;
 
-    public Game(Character player, Character computer) {
+    public Game(Characters.Character player, Character computer) {
         this.player = player;
         this.computer = computer;
     }
