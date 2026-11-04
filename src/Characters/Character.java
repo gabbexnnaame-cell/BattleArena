@@ -1,4 +1,4 @@
-package BattleArena;
+package Characters;
 
 import Action.CombatAction;
 
@@ -13,13 +13,22 @@ public abstract class Character {
     private boolean blocking;
     private int blockPercentage;
     private List<CombatAction> actions;
+    private String attackName;
 
     public Character(String name, int maxHp) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.actions = new ArrayList<>();
+        this.attackName = attackName;
     }
+
+
+    public String getAttackName() {
+        return attackName;
+    }
+
+
 
     public String getName() {
         return name;

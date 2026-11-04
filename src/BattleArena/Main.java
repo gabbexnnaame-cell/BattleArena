@@ -3,6 +3,7 @@ import Action.CombatAction;
 import java.util.List;
 import java.util.Scanner;
 import Characters.*;
+import Characters.Character;
 
 public class Main {
 

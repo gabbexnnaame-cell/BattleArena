@@ -1,7 +1,6 @@
 package Characters;
 
 import Action.*;
-import BattleArena.Character;
 
 public class Berserker extends Character {
 
