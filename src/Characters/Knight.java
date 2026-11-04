@@ -5,7 +5,7 @@ import Action.*;
 public class Knight extends Character {
 
     public Knight (String name) {
-        super(name, 120);
+        super(name, 120, 10, "Sword Slash");
 
         addAction(new AttackAction(15));
         addAction(new HealAction(10));
