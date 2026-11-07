@@ -1,7 +1,5 @@
 package BattleArena;
 import Action.CombatAction;
-
-import java.awt.*;
 import java.util.List;
 import java.util.Scanner;
 import Characters.*;
@@ -10,9 +8,6 @@ import Characters.Character;
 public class Main {
 
   public static void main(String[] args) {
-    Frame frame = new Frame();
-    frame.startingScreen();
-    /*
     Scanner scanner = new Scanner(System.in);
 
     Knight player = new Knight("Player");
@@ -22,8 +17,6 @@ public class Main {
     CombatAction action = chooseAction(player, scanner);
     game.playerTurn(action);
     game.computerTurn();
-
-     */
   }
 
   private static CombatAction chooseAction(Character player, Scanner scanner) {
