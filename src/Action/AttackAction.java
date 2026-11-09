@@ -44,7 +44,7 @@ public class AttackAction implements CombatAction {
 
         System.out.println(
                 actor.getName() + " used " +
-                        actor.getAttackName() + " on " +
+                        actor.getTypeOfStrike() + " on " +
                         target.getName() + " for " +
                         finalDamage + " damage!"
         );
