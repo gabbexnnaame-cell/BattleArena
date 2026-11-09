@@ -14,12 +14,14 @@ public abstract class Character {
     private int blockPercentage;
     private List<CombatAction> actions;
     private String attackName;
+    private int critChance;
 
-    public Character(String name, int maxHp) {
+    public Character(String name, int maxHp, int critChance, String typeOfStrike) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.actions = new ArrayList<>();
+        this.critChance = critChance;
         this.attackName = attackName;
     }
 
@@ -28,7 +30,9 @@ public abstract class Character {
         return attackName;
     }
 
-
+    public int getCritChance() {
+        return critChance;
+    }
 
     public String getName() {
         return name;
