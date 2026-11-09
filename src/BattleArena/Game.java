@@ -4,7 +4,6 @@ import Action.CombatAction;
 import Characters.Character;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,62 +14,59 @@ public class Game {
     private final Random random;
 
     public Game(Character player, Character computer) {
-        this(player, computer, new Random());
+        this.player = player;
+        this.computer = computer;
+        this.random = new Random();
     }
-
-    Game(Character player, Character computer, Random random) {
-        this.player = Objects.requireNonNull(player);
-        this.computer = Objects.requireNonNull(computer);
-        this.random = Objects.requireNonNull(random);
-    }
-
+    
     public void startGame() {
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Battle Arena!");
         System.out.println(player.getName() + " vs " + computer.getName());
-
+        
         while (player.isAlive() && computer.isAlive()) {
 
-            printStatus();
+            System.out.println("\n====================");
+            System.out.println("       NEW ROUND");
+            System.out.println("====================");
 
+            printStatus();
+            
             CombatAction action = choosePlayerAction(scanner);
 
             if (action == null) {
-                System.out.println("Game ended.");
-                return;
+                System.out.println("No action available. Game ended.");
+                break;
             }
-
+            
             playerTurn(action);
-
-            if (computer.isAlive()) {
-                computerTurn();
+            
+            if (!computer.isAlive()) {
+                break;
+            }
+            
+            computerTurn();
+            
+            if (!player.isAlive()) {
+                break;
             }
         }
 
         printResult();
     }
-
-    public void playerTurn(CombatAction playerAction) {
-        Objects.requireNonNull(playerAction);
-
-        if (!player.isAlive() || !computer.isAlive()) {
-            return;
-        }
-
-        playerAction.execute(player, computer);
+    
+    public void playerTurn(CombatAction action) {
+        action.execute(player, computer);
     }
-
+    
     public void computerTurn() {
-
-        if (!player.isAlive() || !computer.isAlive()) {
-            return;
-        }
 
         List<CombatAction> actions = computer.getActions();
 
         if (actions == null || actions.isEmpty()) {
-            System.out.println("Computer has no available actions.");
+            System.out.println("Computer has no actions!");
             return;
         }
 
@@ -78,64 +74,42 @@ public class Game {
 
         CombatAction action = actions.get(randomIndex);
 
-        if (action != null) {
-            action.execute(computer, player);
-        }
+        action.execute(computer, player);
     }
-
+    
     private CombatAction choosePlayerAction(Scanner scanner) {
 
         List<CombatAction> actions = player.getActions();
 
-        if (actions == null || actions.isEmpty()) {
-            System.out.println("No available actions.");
-            return null;
-        }
-
         System.out.println("\nChoose your action:");
 
         for (int i = 0; i < actions.size(); i++) {
-
-            CombatAction action = actions.get(i);
-
-            String actionName = action == null
-                    ? "Unavailable"
-                    : action.getType().toString();
-
-            System.out.println((i + 1) + ". " + actionName);
+            System.out.println(
+                    (i + 1) + ". " + actions.get(i).getType()
+            );
         }
 
         while (true) {
 
-            System.out.print("Enter a number (1-" + actions.size() + "): ");
+            System.out.print("Enter your choice: ");
 
-            if (!scanner.hasNextLine()) {
-                return null;
+            if (!scanner.hasNextInt()) {
+                System.out.println("Please enter a number.");
+                scanner.nextLine();
+                continue;
             }
 
-            String input = scanner.nextLine().trim();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-            try {
-
-                int choice = Integer.parseInt(input);
-
-                if (choice >= 1 && choice <= actions.size()) {
-
-                    CombatAction selectedAction = actions.get(choice - 1);
-
-                    if (selectedAction != null) {
-                        return selectedAction;
-                    }
-                }
-
-            } catch (NumberFormatException ignored) {
-
+            if (choice >= 1 && choice <= actions.size()) {
+                return actions.get(choice - 1);
             }
 
-            System.out.println("Invalid choice. Please try again.");
+            System.out.println("Invalid choice. Try again.");
         }
     }
-
+    
     private void printStatus() {
 
         System.out.println("\n--- Current HP ---");
@@ -150,23 +124,17 @@ public class Game {
                         + computer.getHp() + "/" + computer.getMaxHp()
         );
     }
-
+    
     private void printResult() {
 
-        System.out.println("\n--- Game Over ---");
+        System.out.println("\n===== GAME OVER =====");
 
         if (!player.isAlive() && !computer.isAlive()) {
-
-            System.out.println("The game ended in a draw!");
-
+            System.out.println("Draw!");
         } else if (player.isAlive()) {
-
             System.out.println(player.getName() + " wins!");
-
         } else {
-
             System.out.println(computer.getName() + " wins!");
         }
     }
 }
-
