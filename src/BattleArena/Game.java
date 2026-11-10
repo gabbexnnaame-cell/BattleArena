@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java.util.Arrays.stream;
-
 public class Game {
 
     private final Character player;
