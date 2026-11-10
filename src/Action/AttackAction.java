@@ -117,4 +117,11 @@ public class AttackAction implements CombatAction {
     public boolean isAvailable() {
         return remainingUses > 0;
     }
+
+    @Override
+    public String getDescription() {
+        return name + " | Damage: " + damage +
+                " | Crit: " + critChance + "%" +
+                " | Uses: " + remainingUses + "/" + maxUses;
+    }
 }

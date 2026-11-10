@@ -9,4 +9,6 @@ public interface CombatAction {
     ActionType getType();
 
     boolean isAvailable();
+
+    String getDescription();
 }

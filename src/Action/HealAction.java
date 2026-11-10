@@ -28,4 +28,9 @@ public class HealAction implements CombatAction {
     public boolean isAvailable() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "Heal | Restores up to " + healAmount + " HP";
+    }
 }

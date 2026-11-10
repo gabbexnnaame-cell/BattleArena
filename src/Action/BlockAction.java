@@ -30,4 +30,10 @@ public class BlockAction implements CombatAction {
     public boolean isAvailable() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "Block | Reduces incoming damage by " +
+                blockPercentage + "%";
+    }
 }
