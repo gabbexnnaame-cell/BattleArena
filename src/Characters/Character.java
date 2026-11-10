@@ -1,6 +1,9 @@
+
 package Characters;
 
+import Action.BlockAction;
 import Action.CombatAction;
+import Action.HealAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +16,15 @@ public abstract class Character {
     private boolean blocking;
     private int blockPercentage;
     private List<CombatAction> actions;
-    private String attackName;
-    private int critChance;
 
-    public Character(String name, int maxHp, int critChance, String typeOfStrike) {
+    public Character(String name, int maxHp, int healAmount, int blockPercentage) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.actions = new ArrayList<>();
-        this.critChance = critChance;
-        this.attackName = attackName;
-    }
 
-
-    public String getAttackName() {
-        return attackName;
-    }
-
-    public int getCritChance() {
-        return critChance;
+        addAction(new HealAction(healAmount));
+        addAction(new BlockAction(blockPercentage));
     }
 
     public String getName() {
@@ -54,7 +47,7 @@ public abstract class Character {
         actions.add(action);
     }
 
-    public void takeDamage (int damage) {
+    public void takeDamage(int damage) {
         hp -= damage;
 
         if (hp < 0) {

@@ -7,4 +7,6 @@ public interface CombatAction {
     void execute(Character actor, Character target);
 
     ActionType getType();
+
+    boolean isAvailable();
 }

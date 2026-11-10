@@ -23,4 +23,9 @@ public class HealAction implements CombatAction {
     public ActionType getType() {
         return ActionType.HEAL;
     }
+
+    @Override
+    public boolean isAvailable() {
+        return true;
+    }
 }

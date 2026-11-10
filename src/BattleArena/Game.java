@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.util.Arrays.stream;
+
 public class Game {
 
     private final Character player;
@@ -63,16 +65,20 @@ public class Game {
     
     public void computerTurn() {
 
-        List<CombatAction> actions = computer.getActions();
+        List<CombatAction> availableActions = computer.getActions() //AI use
+                .stream()
+                .filter(CombatAction::isAvailable)
+                .toList();
 
-        if (actions == null || actions.isEmpty()) {
-            System.out.println("Computer has no actions!");
+
+        if (availableActions.isEmpty()) {
+            System.out.println("Computer has no available actions!");
             return;
         }
 
-        int randomIndex = random.nextInt(actions.size());
+        int randomIndex = random.nextInt(availableActions.size());
 
-        CombatAction action = actions.get(randomIndex);
+        CombatAction action = availableActions.get(randomIndex);
 
         action.execute(computer, player);
     }
