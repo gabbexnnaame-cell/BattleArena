@@ -13,21 +13,21 @@ public abstract class Character {
     private boolean blocking;
     private int blockPercentage;
     private List<CombatAction> actions;
-    private String typeOfStrike;
+    private String attackName;
     private int critChance;
 
-    public Character(String name, int maxHp, int critChance, String typeOfStrike) {
+    public Character(String name, int maxHp, int critChance, String attackName) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
         this.actions = new ArrayList<>();
         this.critChance = critChance;
-        this.typeOfStrike = typeOfStrike;
+        this.attackName = attackName;
     }
 
 
-    public String getTypeOfStrike() {
-        return typeOfStrike;
+    public String getAttackName() {
+        return attackName;
     }
 
     public int getCritChance() {
