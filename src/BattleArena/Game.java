@@ -63,29 +63,41 @@ public class Game {
     
     public void computerTurn() {
 
-        List<CombatAction> actions = computer.getActions();
+        List<CombatAction> availableActions = computer.getActions() //AI use
+                .stream()
+                .filter(CombatAction::isAvailable)
+                .toList();
 
-        if (actions == null || actions.isEmpty()) {
-            System.out.println("Computer has no actions!");
+
+        if (availableActions.isEmpty()) {
+            System.out.println("Computer has no available actions!");
             return;
         }
 
-        int randomIndex = random.nextInt(actions.size());
+        int randomIndex = random.nextInt(availableActions.size());
 
-        CombatAction action = actions.get(randomIndex);
+        CombatAction action = availableActions.get(randomIndex);
 
         action.execute(computer, player);
     }
     
     private CombatAction choosePlayerAction(Scanner scanner) {
 
-        List<CombatAction> actions = player.getActions();
+        List<CombatAction> availableActions = player.getActions()
+                        .stream()
+                                .filter(CombatAction::isAvailable)
+                                        .toList();
+
+        if (availableActions.isEmpty()) {
+            return  null;
+        }
+
 
         System.out.println("\nChoose your action:");
 
-        for (int i = 0; i < actions.size(); i++) {
+        for (int i = 0; i < availableActions.size(); i++) {
             System.out.println(
-                    (i + 1) + ". " + actions.get(i).getType()
+                    (i + 1) + ". " + availableActions.get(i).getDescription()
             );
         }
 
@@ -102,8 +114,8 @@ public class Game {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            if (choice >= 1 && choice <= actions.size()) {
-                return actions.get(choice - 1);
+            if (choice >= 1 && choice <= availableActions.size()) {
+                return availableActions.get(choice - 1);
             }
 
             System.out.println("Invalid choice. Try again.");
