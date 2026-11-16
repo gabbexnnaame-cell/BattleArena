@@ -1,8 +1,10 @@
 package BattleArena;
 
+import Action.ActionType;
 import Action.CombatAction;
 import Characters.Character;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -38,22 +40,30 @@ public class Game {
 
                 System.out.println("\nYour move " + move + " of 2");
 
-                CombatAction action = choosePlayerAction(scanner);
+                CombatAction action = choosePlayerAction(scanner, move);
 
-                if (action == null) {
-                    System.out.println("No action available. Game ended.");
-                    return;
+                if (action != null) {
+                    playerTurn(action);
                 }
-
-                playerTurn(action);
 
                 if (!player.isAlive() || !computer.isAlive()) {
                     break;
                 }
             }
 
-            if (player.isAlive() && computer.isAlive()) {
-                computerTurn();
+            if (!player.isAlive() || !computer.isAlive()) {
+                break;
+            }
+
+            for (int move = 1; move <= 2; move++) {
+
+                System.out.println("\nComputer move " + move + " of 2");
+
+                computerTurn(move);
+
+                if (!player.isAlive() || !computer.isAlive()) {
+                    break;
+                }
             }
         }
 
@@ -63,44 +73,46 @@ public class Game {
     public void playerTurn(CombatAction action) {
         action.execute(player, computer);
     }
-    
+
     public void computerTurn() {
+        computerTurn(1);
+    }
 
-        List<CombatAction> availableActions = computer.getActions() //AI use
-                .stream()
-                .filter(CombatAction::isAvailable)
-                .toList();
+    public void computerTurn(int move) {
 
+        List<CombatAction> actions = getAllowedActions(computer, move);
 
-        if (availableActions.isEmpty()) {
-            System.out.println("Computer has no available actions!");
+        if (actions.isEmpty()) {
+            System.out.println("Computer has no available action. Move skipped.");
             return;
         }
 
-        int randomIndex = random.nextInt(availableActions.size());
+        CombatAction action = actions.get(random.nextInt(actions.size()));
 
-        CombatAction action = availableActions.get(randomIndex);
+        System.out.println("Computer chooses: " + action.getType());
 
         action.execute(computer, player);
     }
-    
-    private CombatAction choosePlayerAction(Scanner scanner) {
 
-        List<CombatAction> availableActions = player.getActions()
-                        .stream()
-                                .filter(CombatAction::isAvailable)
-                                        .toList();
+    private CombatAction choosePlayerAction(Scanner scanner, int move) {
 
-        if (availableActions.isEmpty()) {
-            return  null;
+        List<CombatAction> actions = getAllowedActions(player, move);
+
+        if (actions.isEmpty()) {
+            System.out.println("No available action. Move skipped.");
+            return null;
         }
 
+        if (move == 1) {
+            System.out.println("Choose an attack:");
+        } else {
+            System.out.println("Choose heal or block:");
+        }
 
-        System.out.println("\nChoose your action:");
-
-        for (int i = 0; i < availableActions.size(); i++) {
+        for (int i = 0; i < actions.size(); i++) {
             System.out.println(
-                    (i + 1) + ". " + availableActions.get(i).getDescription()
+                    (i + 1) + ". " + actions.get(i).getType()
+                            + " - " + actions.get(i).getDescription()
             );
         }
 
@@ -108,23 +120,55 @@ public class Game {
 
             System.out.print("Enter your choice: ");
 
-            if (!scanner.hasNextInt()) {
+            if (!scanner.hasNextLine()) {
+                throw new IllegalStateException("Input ended before the game finished.");
+            }
+
+            String input = scanner.nextLine();
+
+            try {
+                int choice = Integer.parseInt(input.trim());
+
+                if (choice >= 1 && choice <= actions.size()) {
+                    return actions.get(choice - 1);
+                }
+
+                System.out.println("Invalid choice. Try again.");
+
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a number.");
-                scanner.nextLine();
+            }
+        }
+    }
+
+    private List<CombatAction> getAllowedActions(Character character, int move) {
+
+        List<CombatAction> allowedActions = new ArrayList<>();
+        List<CombatAction> actions = character.getActions();
+
+        if (actions == null) {
+            return allowedActions;
+        }
+
+        for (CombatAction action : actions) {
+
+            if (action == null || !action.isAvailable()) {
                 continue;
             }
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            ActionType type = action.getType();
 
-            if (choice >= 1 && choice <= availableActions.size()) {
-                return availableActions.get(choice - 1);
+            if (move == 1 && type == ActionType.ATTACK) {
+                allowedActions.add(action);
+            } else if (move == 2
+                    && (type == ActionType.HEAL || type == ActionType.BLOCK)) {
+                allowedActions.add(action);
             }
-
-            System.out.println("Invalid choice. Try again.");
         }
+
+        return allowedActions;
     }
-    
+
     private void printStatus() {
 
         System.out.println("\n--- Current HP ---");
@@ -139,7 +183,7 @@ public class Game {
                         + computer.getHp() + "/" + computer.getMaxHp()
         );
     }
-    
+
     private void printResult() {
 
         System.out.println("\n===== GAME OVER =====");
