@@ -18,14 +18,14 @@ public class Game {
         this.computer = computer;
         this.random = new Random();
     }
-    
+
     public void startGame() {
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Battle Arena!");
         System.out.println(player.getName() + " vs " + computer.getName());
-        
+
         while (player.isAlive() && computer.isAlive()) {
 
             System.out.println("\n====================");
@@ -33,30 +33,33 @@ public class Game {
             System.out.println("====================");
 
             printStatus();
-            
-            CombatAction action = choosePlayerAction(scanner);
 
-            if (action == null) {
-                System.out.println("No action available. Game ended.");
-                break;
+            for (int move = 1; move <= 2; move++) {
+
+                System.out.println("\nYour move " + move + " of 2");
+
+                CombatAction action = choosePlayerAction(scanner);
+
+                if (action == null) {
+                    System.out.println("No action available. Game ended.");
+                    return;
+                }
+
+                playerTurn(action);
+
+                if (!player.isAlive() || !computer.isAlive()) {
+                    break;
+                }
             }
-            
-            playerTurn(action);
-            
-            if (!computer.isAlive()) {
-                break;
-            }
-            
-            computerTurn();
-            
-            if (!player.isAlive()) {
-                break;
+
+            if (player.isAlive() && computer.isAlive()) {
+                computerTurn();
             }
         }
 
         printResult();
     }
-    
+
     public void playerTurn(CombatAction action) {
         action.execute(player, computer);
     }
