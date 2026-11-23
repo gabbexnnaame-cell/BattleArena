@@ -1,17 +1,43 @@
 package BattleArena;
+import Action.CombatAction;
 
-import Characters.Character;
+import java.awt.*;
+import java.util.List;
+import java.util.Scanner;
 import Characters.*;
+import Characters.Character;
 
 public class Main {
 
   public static void main(String[] args) {
+    Frame frame = new Frame();
+    frame.startingScreen();
+    /*
+    Scanner scanner = new Scanner(System.in);
 
-    Character player = new Knight("Player");
-    Character computer = new Assassin("Computer");
+    Knight player = new Knight("Player");
+    Mage computer = new Mage("Computer");
 
-    Game game = new Game(player, computer);
+    Game game = new Game(player,computer );
+    CombatAction action = chooseAction(player, scanner);
+    game.playerTurn(action);
+    game.computerTurn();
 
-    game.startGame();
+     */
   }
+
+  private static CombatAction chooseAction(Character player, Scanner scanner) {
+    List<CombatAction> actions = player.getActions();
+
+    System.out.println("Choose your action:");
+
+    for (int i = 0; i < actions.size(); i++) {
+      System.out.println((i + 1) + ". " + actions.get(i).getType());
+    }
+
+    int choice = scanner.nextInt();
+    return actions.get(choice -1);
+  }
+
+
 }
