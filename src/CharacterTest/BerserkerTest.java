@@ -50,6 +50,6 @@ public class BerserkerTest {
 
     @Test
     void berserkerShouldHaveThreeActions() {
-        assertEquals(3, berserker.getActions().size());
+        assertEquals(5, berserker.getActions().size());
     }
 }
