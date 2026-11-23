@@ -18,15 +18,15 @@ public class MageTest {
     }
 
     @Test
-    void mageShouldStartWith85Hp() {
-        assertEquals(85, mage.getHp());
+    void mageShouldStartWith100Hp() {
+        assertEquals(100, mage.getHp());
     }
 
     @Test
     void mageShouldTakeDamage() {
         mage.takeDamage(20);
 
-        assertEquals(65, mage.getHp());
+        assertEquals(80, mage.getHp());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class MageTest {
         mage.takeDamage(30);
         mage.heal(20);
 
-        assertEquals(75, mage.getHp());
+        assertEquals(90, mage.getHp());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MageTest {
         mage.takeDamage(10);
         mage.heal(100);
 
-        assertEquals(85, mage.getHp());
+        assertEquals(100, mage.getHp());
     }
 
     @Test
@@ -59,14 +59,13 @@ public class MageTest {
 
     @Test
     void mageShouldDieAtZeroHp() {
-        mage.takeDamage(85);
+        mage.takeDamage(100);
 
         assertFalse(mage.isAlive());
     }
 
     @Test
     void mageShouldHaveThreeActions() {
-        assertEquals(3, mage.getActions().size());
+        assertEquals(5, mage.getActions().size());
     }
-
 }

@@ -17,8 +17,8 @@ public class BerserkerTest {
     }
 
     @Test
-    void berserkerShouldStartWith110Hp() {
-        assertEquals(110, berserker.getHp());
+    void berserkerShouldStartWith100Hp() {
+        assertEquals(100, berserker.getHp());
     }
 
 
@@ -26,7 +26,7 @@ public class BerserkerTest {
     void berserkerShouldTakeDamage() {
         berserker.takeDamage(30);
 
-        assertEquals(80, berserker.getHp());
+        assertEquals(70, berserker.getHp());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class BerserkerTest {
 
     @Test
     void berserkerShouldDieAtZeroHp() {
-        berserker.takeDamage(110);
+        berserker.takeDamage(100);
 
         assertFalse(berserker.isAlive());
     }

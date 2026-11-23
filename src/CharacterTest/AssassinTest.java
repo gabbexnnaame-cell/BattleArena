@@ -16,16 +16,17 @@ public class AssassinTest {
     }
 
     @Test
-    void assassinShouldStartWith90Hp() {
-        assertEquals(90, assassin.getHp());
+    void assassinShouldStartWith100Hp() {
+        assertEquals(100, assassin.getHp());
     }
 
     @Test
     void assassinShouldTakeDamage() {
         assassin.takeDamage(20);
 
-        assertEquals(70, assassin.getHp());
+        assertEquals(80, assassin.getHp());
     }
+
 
     @Test
     void assassinHpShouldNeverBeNegative() {

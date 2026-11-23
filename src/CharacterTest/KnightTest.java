@@ -16,7 +16,7 @@ public class KnightTest {
     }
 
     @Test
-    void knightShouldHave120Hp() {
+    void knightShouldHave100Hp() {
         assertEquals(100, knight.getHp());
     }
 
