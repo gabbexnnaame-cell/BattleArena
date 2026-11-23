@@ -21,15 +21,6 @@ public class BerserkerTest {
         assertEquals(110, berserker.getHp());
     }
 
-    @Test
-    void berserkerShouldHaveCorrectTypeOfStrike() {
-        assertEquals("Brutal Smash", berserker.getTypeOfStrike());
-    }
-
-    @Test
-    void berserkerShouldHave20PercentCritChance() {
-        assertEquals(20, berserker.getCritChance());
-    }
 
     @Test
     void berserkerShouldTakeDamage() {

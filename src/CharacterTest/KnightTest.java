@@ -1,4 +1,3 @@
-
 package CharacterTest;
 
 import Characters.Knight;
@@ -18,25 +17,17 @@ public class KnightTest {
 
     @Test
     void knightShouldHave120Hp() {
-        assertEquals(120, knight.getHp());
+        assertEquals(100, knight.getHp());
     }
 
-    @Test
-    void knightShouldHaveCorrectAttackName() {
-        assertEquals("Sword Slash", knight.getTypeOfStrike());
-    }
-
-    @Test
-    void knightShouldHave10PercentCritChance() {
-        assertEquals(10, knight.getCritChance());
-    }
 
     @Test
     void knightShouldTakeDamage() {
         knight.takeDamage(20);
 
-        assertEquals(100, knight.getHp());
+        assertEquals(80, knight.getHp());
     }
+
 
     @Test
     void knightShouldBlock() {

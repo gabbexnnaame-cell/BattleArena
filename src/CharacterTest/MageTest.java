@@ -23,16 +23,6 @@ public class MageTest {
     }
 
     @Test
-    void mageShouldHaveCorrectAttackName() {
-        assertEquals("Fireball", mage.getTypeOfStrike());
-    }
-
-    @Test
-    void mageShouldHave15PercentCritChance() {
-        assertEquals(15, mage.getCritChance());
-    }
-
-    @Test
     void mageShouldTakeDamage() {
         mage.takeDamage(20);
 

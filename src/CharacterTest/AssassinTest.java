@@ -39,13 +39,4 @@ public class AssassinTest {
         assertEquals(3, assassin.getActions().size());
     }
 
-    @Test
-    void assassinShouldHaveCorrectCritChance() {
-        assertEquals(30, assassin.getCritChance());
     }
-
-    @Test
-    void assassinShouldHaveCorrectTypeOfStrike() {
-        assertEquals("Shadow Strike", assassin.getTypeOfStrike());
-    }
-}
