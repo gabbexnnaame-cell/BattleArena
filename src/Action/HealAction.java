@@ -1,24 +1,43 @@
+
 package Action;
 
 import Characters.Character;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HealAction implements CombatAction {
 
-    private int healAmount;
+    private final int healAmount;
 
+
+    // Constructor
     public HealAction(int healAmount) {
         this.healAmount = healAmount;
     }
 
+
+    // Executes healing and returns combat messages
     @Override
-    public void execute(Character actor, Character target) {
+    public List<String> execute(Character actor, Character target) {
+
+        List<String> messages = new ArrayList<>();
+
+        int previousHp = actor.getHp();
+
         actor.heal(healAmount);
 
-        System.out.println(
-                actor.getName() + " heals for " + healAmount + " HP!"
+        int actualHealing = actor.getHp() - previousHp;
+
+        messages.add(
+                actor.getName() + " heals for " + actualHealing + " HP!"
         );
+
+        return messages;
     }
 
+
+    // Action information
     @Override
     public ActionType getType() {
         return ActionType.HEAL;

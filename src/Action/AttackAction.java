@@ -2,20 +2,26 @@
 package Action;
 
 import Characters.Character;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class AttackAction implements CombatAction {
 
-    private String name;
-    private int damage;
-    private int maxUses;
+    private final String name;
+    private final int damage;
+    private final int maxUses;
     private int remainingUses;
-    private int critChance;
-    private int lifesteal;
+    private final int critChance;
+    private final int lifesteal;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    public AttackAction(String name, int damage, int maxUses, int critChance, int lifesteal) {
+
+    // Constructor
+    public AttackAction(String name, int damage, int maxUses,
+                        int critChance, int lifesteal) {
 
         this.name = name;
         this.damage = damage;
@@ -25,6 +31,8 @@ public class AttackAction implements CombatAction {
         this.lifesteal = lifesteal;
     }
 
+
+    // Getters
     public String getName() {
         return name;
     }
@@ -49,17 +57,23 @@ public class AttackAction implements CombatAction {
         return lifesteal;
     }
 
+
+    // Executes the attack and returns combat messages
     @Override
-    public void execute(Character actor, Character target) {
+    public List<String> execute(Character actor, Character target) {
+
+        List<String> messages = new ArrayList<>();
 
         if (remainingUses <= 0) {
-            System.out.println(name + " has no uses remaining!");
-            return;
+            messages.add(name + " has no uses remaining!");
+            return messages;
         }
 
         remainingUses--;
 
         int finalDamage = damage;
+
+        messages.add(actor.getName() + " used " + name + "!");
 
         // Apply blocking first
         if (target.isBlocking()) {
@@ -71,16 +85,17 @@ public class AttackAction implements CombatAction {
 
             target.setBlocking(false);
 
-            System.out.println(
-                    target.getName() + " blocked " +
-                            blockedDamage + " damage!"
+            messages.add(
+                    target.getName() + " blocked " + blockedDamage + " damage!"
             );
         }
 
         // Check for critical hit after blocking
         if (random.nextInt(100) < critChance) {
+
             finalDamage *= 2;
-            System.out.println("CRITICAL HIT!");
+
+            messages.add("CRITICAL HIT!");
         }
 
         // Deal damage
@@ -90,9 +105,8 @@ public class AttackAction implements CombatAction {
 
         int actualDamageDealt = previousHp - target.getHp();
 
-        System.out.println(
-                actor.getName() + " used " + name + " on " +
-                        target.getName() + " for " + actualDamageDealt + " damage!"
+        messages.add(
+                target.getName() + " took " + actualDamageDealt + " damage!"
         );
 
         // Apply lifesteal based on actual damage dealt
@@ -102,12 +116,16 @@ public class AttackAction implements CombatAction {
 
             actor.heal(healingAmount);
 
-            System.out.println(
+            messages.add(
                     actor.getName() + " recovered " + healingAmount + " HP!"
             );
         }
+
+        return messages;
     }
 
+
+    // Action information
     @Override
     public ActionType getType() {
         return ActionType.ATTACK;

@@ -6,7 +6,7 @@ import Action.*;
 public class Mage extends Character {
 
     public Mage(String name) {
-        super(name, 100, 25, 30);
+        super(name, 100, 25, 30, CharacterClass.MAGE);
 
         addAction(new AttackAction("Magic Bolt", 15, 10, 15, 0));
         addAction(new AttackAction("Arcane Drain", 12, 5, 15, 25));

@@ -1,10 +1,12 @@
+
 package Action;
 
 import Characters.Character;
+import java.util.List;
 
 public interface CombatAction {
 
-    void execute(Character actor, Character target);
+    List<String> execute(Character actor, Character target);
 
     ActionType getType();
 
