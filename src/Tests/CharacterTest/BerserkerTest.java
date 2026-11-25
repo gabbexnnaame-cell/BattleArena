@@ -1,5 +1,5 @@
 
-package CharacterTest;
+package Tests.CharacterTest;
 
 import Characters.Berserker;
 import org.junit.jupiter.api.BeforeEach;

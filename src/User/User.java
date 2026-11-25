@@ -4,10 +4,10 @@ import Characters.Character;
 
 public class User {
 
-    private String username;
-    private Character character;
+    private final String username;
+    private final Character character;
 
-    public User(String username,Character character) {
+    public User(String username, Character character) {
         this.username = username;
         this.character = character;
     }

@@ -10,23 +10,38 @@ import java.util.List;
 
 public abstract class Character {
 
-    private String name;
+    // Character information
+    private final String name;
     private int hp;
-    private int maxHp;
+    private final int maxHp;
+    private final CharacterClass characterClass;
+
+    // Combat state
     private boolean blocking;
     private int blockPercentage;
-    private List<CombatAction> actions;
 
-    public Character(String name, int maxHp, int healAmount, int blockPercentage) {
+    // Available actions
+    private final List<CombatAction> actions;
+
+
+    // Constructor
+    public Character(String name, int maxHp, int healAmount,
+                     int blockPercentage, CharacterClass characterClass) {
+
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
+        this.blockPercentage = blockPercentage;
+        this.characterClass = characterClass;
+
         this.actions = new ArrayList<>();
 
         addAction(new HealAction(healAmount));
         addAction(new BlockAction(blockPercentage));
     }
 
+
+    // Getters
     public String getName() {
         return name;
     }
@@ -39,15 +54,24 @@ public abstract class Character {
         return maxHp;
     }
 
-    public List<CombatAction> getActions() {
-        return actions;
+    public CharacterClass getCharacterClass() {
+        return characterClass;
     }
 
+    public List<CombatAction> getActions() {
+        return List.copyOf(actions);
+    }
+
+
+    // Action management
     public void addAction(CombatAction action) {
         actions.add(action);
     }
 
+
+    // Health management
     public void takeDamage(int damage) {
+
         hp -= damage;
 
         if (hp < 0) {
@@ -56,6 +80,7 @@ public abstract class Character {
     }
 
     public void heal(int amount) {
+
         hp += amount;
 
         if (hp > maxHp) {
@@ -63,6 +88,12 @@ public abstract class Character {
         }
     }
 
+    public boolean isAlive() {
+        return hp > 0;
+    }
+
+
+    // Blocking management
     public boolean isBlocking() {
         return blocking;
     }
@@ -76,6 +107,7 @@ public abstract class Character {
     }
 
     public void setBlockPercentage(int blockPercentage) {
+
         if (blockPercentage < 0 || blockPercentage > 100) {
             throw new IllegalArgumentException(
                     "Block percentage must be between 0 and 100"
@@ -83,9 +115,5 @@ public abstract class Character {
         }
 
         this.blockPercentage = blockPercentage;
-    }
-
-    public boolean isAlive() {
-        return hp > 0;
     }
 }

@@ -1,4 +1,4 @@
-package CharacterTest;
+package Tests.CharacterTest;
 
 import Characters.Assassin;
 import org.junit.jupiter.api.BeforeEach;

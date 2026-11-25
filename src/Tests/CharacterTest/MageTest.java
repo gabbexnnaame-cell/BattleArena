@@ -1,8 +1,7 @@
 
-package CharacterTest;
+package Tests.CharacterTest;
 
 import Characters.Mage;
-import Action.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
