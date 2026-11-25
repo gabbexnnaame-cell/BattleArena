@@ -169,4 +169,3 @@ public class Frame extends JFrame {
             new Frame();
         });
     }
-}
