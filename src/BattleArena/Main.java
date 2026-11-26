@@ -12,7 +12,7 @@ public class Main {
 
   public static void main(String[] args) {
     Frame frame = new Frame();
-    frame.startingScreen();
+
   }
 
   private static CombatAction chooseAction(Character player, Scanner scanner) {
