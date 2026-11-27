@@ -49,7 +49,7 @@ public class BerserkerTest {
     }
 
     @Test
-    void berserkerShouldHaveThreeActions() {
+    void berserkerShouldHaveFiveActions() {
         assertEquals(5, berserker.getActions().size());
     }
 }

@@ -13,6 +13,11 @@ public class Server {
         this.matchHistory = new MatchHistory();
     }
 
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.startServer();
+    }
+
     public void startServer() {
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
