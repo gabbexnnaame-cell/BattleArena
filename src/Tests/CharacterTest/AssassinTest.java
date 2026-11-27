@@ -36,7 +36,7 @@ public class AssassinTest {
     }
 
     @Test
-    void assassinShouldHaveThreeActions() {
+    void assassinShouldHaveFiveActions() {
         assertEquals(5, assassin.getActions().size());
     }
 
